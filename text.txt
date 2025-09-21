@@ -1,0 +1,66 @@
+Slide 1 – Title
+
+“Good morning everyone.
+We are Team Nirmaan.
+Our problem statement is Blockchain-based Supply Chain Transparency for Agricultural Produce under the theme Agriculture, Food, and Rural Development.”
+
+🎤 Slide 2 – Idea Title
+
+“Our solution is a Blockchain-based digital platform to track and trace farm produce.
+Every stage like harvest, storage, transport, and retail is recorded securely.
+This increases trust between farmers, distributors, retailers, and consumers.
+It also reduces fraud and middleman exploitation.
+Our unique features are:
+
+Smart contracts for automatic farmer payments.
+
+QR codes for consumers to verify products.”
+
+🎤 Slide 3 – Technical Approach
+
+“We plan to use:
+
+Ethereum Blockchain and Web3,
+
+Smart contracts with ERC-20 tokens,
+
+React.js and Tailwind CSS for frontend,
+
+Node.js and Express.js for backend,
+
+MongoDB for database.
+
+The process works like this:
+Farmers upload crop details and get a batch ID.
+Each transaction is logged on blockchain.
+Smart contracts release payments automatically.
+Consumers scan a QR code to see the full product journey.”
+
+🎤 Slide 4 – Feasibility & Viability
+
+“Our idea is technically possible and can be implemented in phases – pilot, regional, and nationwide.
+Challenges include cost, low digital literacy, and poor internet in rural areas.
+We plan to overcome these with subsidies, farmer cooperatives, and training workshops.”
+
+🎤 Slide 5 – Impact & Benefits
+
+“This solution will:
+
+Build trust and accountability in supply chains,
+
+Give farmers fair prices and faster payments,
+
+Reduce fraud and wastage,
+
+Improve export quality and meet global standards.”
+
+🎤 Slide 6 – Research & References
+
+“We researched projects like IBM Food Trust and studied Ethereum smart contracts.
+We also reviewed IEEE research papers and FAO reports on blockchain in agriculture.
+The Government’s Agri-Stack initiative also inspired us.”
+
+🎤 Closing
+
+“To conclude, our solution ensures transparency, fair payments, and trust in agriculture supply chains using blockchain.
+Thank you.”
