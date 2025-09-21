@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { User, Search, Shield, Leaf, Truck, Store, MapPin, Calendar, Clock, CheckCircle } from "lucide-react";
+import { User, Search, Shield, Leaf, Truck, Store, MapPin, Calendar, Clock, CheckCircle, TrendingUp } from "lucide-react";
 import { blockchain, Product, BlockData } from "@/lib/blockchain";
 import { toast } from "@/hooks/use-toast";
 
@@ -215,6 +215,21 @@ const ConsumerPage = () => {
               </CardContent>
             </Card>
 
+            {/* Blockchain Framework Info */}
+            <Card className="mb-6 border-blockchain">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-blockchain rounded-full flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg">Blockchain Framework</h3>
+                    <p className="text-sm text-muted-foreground">{product.blockchainFramework}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Supply Chain Journey */}
             <Card className="shadow-blockchain">
               <CardHeader>
@@ -227,84 +242,122 @@ const ConsumerPage = () => {
                 </p>
               </CardHeader>
               <CardContent>
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {product.blocks.map((block, index) => {
                     const StageIcon = getStageIcon(block.stage);
                     const isLast = index === product.blocks.length - 1;
                     
                     return (
                       <div key={block.id} className="relative">
-                        {/* Timeline line */}
                         {!isLast && (
-                          <div className="absolute left-6 top-12 w-0.5 h-20 bg-border"></div>
+                          <div className="absolute left-6 top-16 w-0.5 h-16 bg-border"></div>
                         )}
                         
-                        <div className="flex gap-4">
-                          {/* Icon */}
-                          <div className={`w-12 h-12 rounded-full border-2 border-current flex items-center justify-center flex-shrink-0 bg-background ${getStageColor(block.stage)}`}>
-                            <StageIcon className="w-5 h-5" />
-                          </div>
-                          
-                          {/* Content */}
-                          <div className="flex-1 pb-8">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h4 className="font-bold text-lg">{getStageName(block.stage)}</h4>
-                              <Badge variant="outline" className="text-xs">
-                                Block #{index + 1}
-                              </Badge>
-                            </div>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                              <div className="flex items-center gap-2 text-sm">
-                                <MapPin className="w-4 h-4 text-muted-foreground" />
-                                <span>{block.location}</span>
+                        <Card className="ml-0 border-l-4 border-l-current">
+                          <CardContent className="p-4">
+                            <div className="flex items-start gap-4">
+                              <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${getStageColor(block.stage)} bg-background border-2 border-current`}>
+                                <StageIcon className="w-5 h-5" />
                               </div>
-                              <div className="flex items-center gap-2 text-sm">
-                                <Clock className="w-4 h-4 text-muted-foreground" />
-                                <span>{new Date(block.timestamp).toLocaleString()}</span>
-                              </div>
-                              <div className="flex items-center gap-2 text-sm">
-                                <User className="w-4 h-4 text-muted-foreground" />
-                                <span>{block.stakeholder}</span>
-                              </div>
-                              <div className="flex items-center gap-2 text-sm">
-                                <Shield className="w-4 h-4 text-muted-foreground" />
-                                <span className="font-mono text-xs">{block.hash.slice(0, 8)}...</span>
-                              </div>
-                            </div>
-                            
-                            {/* Stage specific data */}
-                            <div className="bg-muted/50 rounded-lg p-3">
-                              {block.stage === "farm" && (
-                                <div className="grid grid-cols-2 gap-2 text-sm">
-                                  <div><span className="text-muted-foreground">Quality:</span> {block.data.quality}</div>
-                                  <div><span className="text-muted-foreground">Organic:</span> {block.data.organicCertified ? "Yes" : "No"}</div>
-                                </div>
-                              )}
                               
-                              {block.stage === "transport" && (
-                                <div className="grid grid-cols-2 gap-2 text-sm">
-                                  <div><span className="text-muted-foreground">Vehicle:</span> {block.data.vehicle}</div>
-                                  <div><span className="text-muted-foreground">Driver:</span> {block.data.driver}</div>
-                                  <div><span className="text-muted-foreground">Temperature:</span> {block.data.temperature}</div>
-                                  <div><span className="text-muted-foreground">Humidity:</span> {block.data.humidity}</div>
+                              <div className="flex-1 space-y-3">
+                                <div className="flex items-center gap-2">
+                                  <h4 className="font-bold text-lg">{getStageName(block.stage)}</h4>
+                                  <Badge variant="outline" className="text-xs">#{index + 1}</Badge>
+                                  <Badge className="bg-blockchain text-white text-xs">
+                                    {block.hash.slice(0, 6)}...
+                                  </Badge>
                                 </div>
-                              )}
-                              
-                              {block.stage === "retail" && (
-                                <div className="grid grid-cols-2 gap-2 text-sm">
-                                  <div><span className="text-muted-foreground">Retail Price:</span> ₹{block.data.retailPrice}</div>
-                                  <div><span className="text-muted-foreground">Quality Check:</span> {block.data.qualityCheck}</div>
-                                  <div className="col-span-2"><span className="text-muted-foreground">Storage:</span> {block.data.storageConditions}</div>
+                                
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                                  <div className="flex items-center gap-2">
+                                    <MapPin className="w-4 h-4 text-muted-foreground" />
+                                    <span className="font-medium">{block.location}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <Clock className="w-4 h-4 text-muted-foreground" />
+                                    <span>{new Date(block.timestamp).toLocaleDateString()}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <User className="w-4 h-4 text-muted-foreground" />
+                                    <span className="font-medium">{block.stakeholder}</span>
+                                  </div>
+                                  {block.price > 0 && (
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-success font-bold">₹{block.price}/kg</span>
+                                    </div>
+                                  )}
                                 </div>
-                              )}
+                                
+                                {/* Enhanced stage-specific data */}
+                                <div className="bg-muted/30 rounded-lg p-3">
+                                  {block.stage === "farm" && (
+                                    <div className="space-y-2">
+                                      <div className="grid grid-cols-2 gap-3 text-sm">
+                                        <div><span className="text-muted-foreground">Quality Grade:</span> <span className="font-semibold">{block.data.quality}</span></div>
+                                        <div><span className="text-muted-foreground">Organic:</span> <span className="font-semibold">{block.data.organicCertified ? "Certified" : "Conventional"}</span></div>
+                                      </div>
+                                    </div>
+                                  )}
+                                  
+                                  {block.stage === "transport" && (
+                                    <div className="space-y-2">
+                                      <div className="grid grid-cols-2 gap-3 text-sm">
+                                        <div><span className="text-muted-foreground">Vehicle:</span> <span className="font-semibold">{block.data.vehicle}</span></div>
+                                        <div><span className="text-muted-foreground">Driver:</span> <span className="font-semibold">{block.data.driver}</span></div>
+                                        <div><span className="text-muted-foreground">Temperature:</span> <span className="font-semibold">{block.data.temperature}</span></div>
+                                        <div><span className="text-muted-foreground">Condition:</span> <span className="font-semibold">Optimal</span></div>
+                                      </div>
+                                    </div>
+                                  )}
+                                  
+                                  {block.stage === "warehouse" && (
+                                    <div className="space-y-2">
+                                      <div className="grid grid-cols-2 gap-3 text-sm">
+                                        <div><span className="text-muted-foreground">Facility:</span> <span className="font-semibold">{block.data.facility || "Central Warehouse"}</span></div>
+                                        <div><span className="text-muted-foreground">Storage Temp:</span> <span className="font-semibold">{block.data.temperature || "Ambient"}</span></div>
+                                        <div><span className="text-muted-foreground">Quality Check:</span> <span className="font-semibold">{block.data.quality_check || "Passed"}</span></div>
+                                        <div><span className="text-muted-foreground">Duration:</span> <span className="font-semibold">{block.data.storage_duration || "3 days"}</span></div>
+                                      </div>
+                                    </div>
+                                  )}
+                                  
+                                  {block.stage === "retail" && (
+                                    <div className="space-y-2">
+                                      <div className="grid grid-cols-2 gap-3 text-sm">
+                                        <div><span className="text-muted-foreground">Store ID:</span> <span className="font-semibold">{block.data.store_id || "N/A"}</span></div>
+                                        <div><span className="text-muted-foreground">Packaging:</span> <span className="font-semibold">{block.data.packaging || "Standard"}</span></div>
+                                        <div><span className="text-muted-foreground">Shelf Life:</span> <span className="font-semibold">{block.data.shelf_life || "Fresh"}</span></div>
+                                        <div><span className="text-muted-foreground">Display:</span> <span className="font-semibold">{block.data.display_location || "Fresh Section"}</span></div>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
+                          </CardContent>
+                        </Card>
                       </div>
                     );
                   })}
                 </div>
+                
+                {/* Farmer Revenue Info */}
+                {product.farmerRevenue && product.farmerRevenue > 0 && (
+                  <div className="mt-6 p-4 bg-success/10 border border-success rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <TrendingUp className="w-5 h-5 text-success" />
+                      <span className="font-bold text-success">Farmer Revenue Impact</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      When this product sells, farmer <span className="font-semibold">{product.farmer}</span> receives:
+                    </p>
+                    <p className="text-2xl font-bold text-success">₹{product.farmerRevenue.toFixed(2)}</p>
+                    <p className="text-xs text-muted-foreground">
+                      (35% of total revenue • Supporting sustainable farming)
+                    </p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </>

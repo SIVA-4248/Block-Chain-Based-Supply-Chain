@@ -32,6 +32,8 @@ export interface Product {
   organicCertified: boolean;
   qrCode: string;
   blocks: BlockData[];
+  farmerRevenue?: number;
+  blockchainFramework: string;
 }
 
 // Simple hash function for demonstration
@@ -93,7 +95,7 @@ export class AgriBlockchain {
     return blockData;
   }
 
-  addProduct(product: Omit<Product, "id" | "qrCode" | "blocks">): Product {
+  addProduct(product: Omit<Product, "id" | "qrCode" | "blocks" | "farmerRevenue" | "blockchainFramework">): Product {
     const id = `prod_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const qrCode = `https://agrichain.app/track/${id}`;
     
@@ -101,7 +103,9 @@ export class AgriBlockchain {
       ...product,
       id,
       qrCode,
-      blocks: []
+      blocks: [],
+      farmerRevenue: 0,
+      blockchainFramework: "Hyperledger Fabric v2.4"
     };
 
     // Create initial block for harvest
@@ -147,6 +151,13 @@ export class AgriBlockchain {
 
     product.status = statusMap[stage];
     product.currentPrice = price > 0 ? price : product.currentPrice;
+    
+    // Update farmer revenue when product is sold
+    if (stage === "consumer" || product.status === "sold") {
+      const totalRevenue = product.currentPrice * product.quantity;
+      const farmerShare = 0.35; // 35% goes to farmer
+      product.farmerRevenue = totalRevenue * farmerShare;
+    }
     
     this.products.set(productId, product);
     return true;

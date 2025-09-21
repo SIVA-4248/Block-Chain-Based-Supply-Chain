@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { Shield, Leaf, Truck, Store, User, CheckCircle, TrendingUp, Users } from "lucide-react";
-import DemoHelper from "@/components/DemoHelper";
+
 import heroImage from "@/assets/hero-agriculture.jpg";
 import supplyChainImage from "@/assets/supply-chain.jpg";
 import qrScanImage from "@/assets/qr-scan.jpg";
@@ -85,13 +85,13 @@ const HomePage = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in slide-in-from-bottom-8 duration-1000 delay-600">
-              <Button size="lg" asChild className="text-lg px-8 py-6 bg-white text-primary hover:bg-white/90 font-bold shadow-lg">
+              <Button size="lg" asChild className="text-lg px-8 py-6 bg-white text-primary hover:bg-white/90 font-bold shadow-lg border-2 border-white">
                 <Link to="/track">
                   <Shield className="mr-2" />
                   Track Product
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild className="text-lg px-8 py-6 border-2 border-white text-white hover:bg-white hover:text-primary font-bold shadow-lg">
+              <Button size="lg" asChild className="text-lg px-8 py-6 bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold shadow-lg">
                 <Link to="/farmer">
                   <Leaf className="mr-2" />
                   Get Started
@@ -230,18 +230,16 @@ const HomePage = () => {
             Start building trust and transparency in agricultural supply chains today
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild className="text-lg px-8 py-6 bg-white text-blockchain font-bold shadow-lg">
+            <Button size="lg" asChild className="text-lg px-8 py-6 bg-white text-blockchain font-bold shadow-lg border-2 border-white">
               <Link to="/farmer">Start as Farmer</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="text-lg px-8 py-6 border-2 border-white text-white hover:bg-white hover:text-blockchain font-bold shadow-lg">
+            <Button size="lg" asChild className="text-lg px-8 py-6 bg-transparent border-2 border-white text-white hover:bg-white hover:text-blockchain font-bold shadow-lg">
               <Link to="/track">Track Product</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Demo Helper */}
-      <DemoHelper />
     </div>
   );
 };
