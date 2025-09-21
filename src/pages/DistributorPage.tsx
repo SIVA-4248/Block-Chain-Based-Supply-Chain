@@ -22,7 +22,8 @@ const DistributorPage = () => {
     temperature: "",
     humidity: "",
     location: "",
-    notes: ""
+    notes: "",
+    price: ""
   });
 
   const handlePickup = (product: Product) => {
@@ -34,7 +35,8 @@ const DistributorPage = () => {
       temperature: "25",
       humidity: "65",
       location: "",
-      notes: ""
+      notes: "",
+      price: (product.currentPrice * 1.15).toFixed(2)
     });
     setShowUpdateForm(true);
   };
@@ -48,7 +50,8 @@ const DistributorPage = () => {
       temperature: "24",
       humidity: "60",
       location: "",
-      notes: ""
+      notes: "",
+      price: (product.currentPrice * 1.15).toFixed(2)
     });
     setShowUpdateForm(true);
   };
@@ -72,7 +75,8 @@ const DistributorPage = () => {
           timestamp: new Date().toISOString()
         },
         "Green Valley Logistics",
-        updateData.location
+        updateData.location,
+        parseFloat(updateData.price)
       );
 
       if (success) {
@@ -239,7 +243,19 @@ const DistributorPage = () => {
                   />
                 </div>
 
-                <div className="md:col-span-2">
+                <div>
+                  <Label htmlFor="price">New Price per unit (₹) *</Label>
+                  <Input
+                    id="price"
+                    type="number"
+                    step="0.01"
+                    value={updateData.price}
+                    onChange={(e) => setUpdateData({...updateData, price: e.target.value})}
+                    required
+                  />
+                </div>
+
+                <div>
                   <Label htmlFor="notes">Additional Notes</Label>
                   <Textarea
                     id="notes"

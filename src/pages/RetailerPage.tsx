@@ -67,7 +67,8 @@ const RetailerPage = () => {
           receivedDate: new Date().toISOString()
         },
         "ABC SuperMart",
-        receiveData.storeLocation
+        receiveData.storeLocation,
+        parseFloat(receiveData.retailPrice)
       );
 
       if (success) {
@@ -104,7 +105,8 @@ const RetailerPage = () => {
           soldDate: new Date().toISOString()
         },
         "ABC SuperMart",
-        receiveData.storeLocation
+        receiveData.storeLocation,
+        parseFloat(sellData.soldPrice)
       );
 
       if (success) {

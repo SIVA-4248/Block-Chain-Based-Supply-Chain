@@ -7,6 +7,7 @@ import { QRCode } from "@/components/ui/qr-code";
 import { Shield, Search, Scan, Download, Share2, CheckCircle } from "lucide-react";
 import { blockchain, Product } from "@/lib/blockchain";
 import { toast } from "@/hooks/use-toast";
+import PriceJourney from "@/components/PriceJourney";
 
 const TrackPage = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -283,6 +284,14 @@ const TrackPage = () => {
                         <p className="text-sm text-muted-foreground">Harvest Date</p>
                         <p className="font-semibold">{new Date(product.harvestDate).toLocaleDateString()}</p>
                       </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">Farm Price</p>
+                        <p className="font-semibold text-success">{product.currency}{product.farmPrice}/kg</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">Current Price</p>
+                        <p className="font-semibold text-blockchain">{product.currency}{product.currentPrice}/kg</p>
+                      </div>
                     </div>
                     
                     <div className="flex items-center justify-between pt-4 border-t">
@@ -294,8 +303,12 @@ const TrackPage = () => {
                       </div>
                       
                       <div className="text-right">
-                        <p className="text-sm text-muted-foreground">Supply Chain Steps</p>
-                        <p className="font-bold text-lg">{product.blocks.length}</p>
+                        <p className="text-sm text-muted-foreground">Price Change</p>
+                        <p className={`font-bold text-lg ${
+                          product.currentPrice > product.farmPrice ? 'text-warning' : 'text-success'
+                        }`}>
+                          +{((product.currentPrice - product.farmPrice) / product.farmPrice * 100).toFixed(1)}%
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -318,6 +331,9 @@ const TrackPage = () => {
               </Card>
             </div>
 
+            {/* Price Journey Visualization */}
+            <PriceJourney product={product} />
+
             {/* Blockchain Journey Visualization */}
             <Card className="shadow-blockchain">
               <CardHeader>
@@ -337,9 +353,19 @@ const TrackPage = () => {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="font-semibold capitalize">{block.stage}</h4>
-                          <Badge variant="outline" className="text-xs font-mono">
-                            {block.hash.slice(0, 8)}...
-                          </Badge>
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline" className="text-xs">
+                              {block.currency}{block.price}/kg
+                            </Badge>
+                            {block.priceChange !== 0 && (
+                              <Badge variant={block.priceChange > 0 ? "destructive" : "default"} className="text-xs">
+                                {block.priceChange > 0 ? '+' : ''}{block.priceChange.toFixed(2)}
+                              </Badge>
+                            )}
+                            <Badge variant="outline" className="text-xs font-mono">
+                              {block.hash.slice(0, 8)}...
+                            </Badge>
+                          </div>
                         </div>
                         
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm text-muted-foreground">
@@ -347,6 +373,14 @@ const TrackPage = () => {
                           <div>🏢 {block.stakeholder}</div>
                           <div>⏰ {new Date(block.timestamp).toLocaleString()}</div>
                         </div>
+                        
+                        {Object.keys(block.data).length > 0 && (
+                          <div className="mt-2 p-2 bg-background rounded text-xs">
+                            <strong>Details:</strong> {Object.entries(block.data).map(([key, value]) => 
+                              `${key}: ${value}`
+                            ).join(', ')}
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}

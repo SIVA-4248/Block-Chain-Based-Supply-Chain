@@ -85,13 +85,13 @@ const HomePage = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in slide-in-from-bottom-8 duration-1000 delay-600">
-              <Button size="lg" variant="secondary" asChild className="text-lg px-8 py-6">
+              <Button size="lg" asChild className="text-lg px-8 py-6 bg-white text-primary hover:bg-white/90 font-bold shadow-lg">
                 <Link to="/track">
                   <Shield className="mr-2" />
                   Track Product
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild className="text-lg px-8 py-6 border-white text-white hover:bg-white hover:text-primary">
+              <Button size="lg" variant="outline" asChild className="text-lg px-8 py-6 border-2 border-white text-white hover:bg-white hover:text-primary font-bold shadow-lg">
                 <Link to="/farmer">
                   <Leaf className="mr-2" />
                   Get Started
@@ -230,10 +230,10 @@ const HomePage = () => {
             Start building trust and transparency in agricultural supply chains today
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild className="text-lg px-8 py-6">
+            <Button size="lg" asChild className="text-lg px-8 py-6 bg-white text-blockchain font-bold shadow-lg">
               <Link to="/farmer">Start as Farmer</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="text-lg px-8 py-6 border-white text-white hover:bg-white hover:text-blockchain">
+            <Button size="lg" variant="outline" asChild className="text-lg px-8 py-6 border-2 border-white text-white hover:bg-white hover:text-blockchain font-bold shadow-lg">
               <Link to="/track">Track Product</Link>
             </Button>
           </div>

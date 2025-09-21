@@ -30,10 +30,19 @@ const FarmerPage = () => {
     
     try {
       const newProduct = blockchain.addProduct({
-        ...formData,
+        name: formData.name,
+        variety: formData.variety,
         quantity: parseFloat(formData.quantity),
+        unit: formData.unit,
+        harvestDate: formData.harvestDate,
+        farmer: formData.farmer,
+        farmerLocation: formData.farmerLocation,
+        status: "harvested" as const,
+        farmPrice: parseFloat(formData.currentPrice),
         currentPrice: parseFloat(formData.currentPrice),
-        status: "harvested" as const
+        currency: "₹",
+        category: "grains",
+        organicCertified: true
       });
 
       setProducts([...products, newProduct]);
